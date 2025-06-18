@@ -1,4 +1,3 @@
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -11,23 +10,22 @@ import { NavLink } from "react-router";
 const Home = () => {
   const [products, setProducts] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getProducts();
-        console.log("Productos obtenidos:", response.data);  // Verifica la estructura
-        setProducts(response.data.products || []);  // Evita errores si está vacío
+        const { data } = await getProducts();
+        setProducts(data.products);
       } catch (error) {
-        console.error("Error al obtener productos:", error);
+        console.error(error);
       }
     };
 
     getData();
   }, []);
 
-
+  // TOOD: Paginado filtro y búsqueda
   return (
-    <Container className="my-4">
+    <>
       <h2>Catálogo de productos</h2>
       <Row className="g-4">
         {products.map((product, index) => (
@@ -52,7 +50,7 @@ useEffect(() => {
           </Col>
         ))}
       </Row>
-    </Container>
+    </>
   );
 };
 
