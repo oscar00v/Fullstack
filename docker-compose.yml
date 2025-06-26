@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - tienda-net
+
+  backend:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - tienda-net
+
+  mongo: 
+    image: mongo:latest
+    container_name: tienda-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - tienda-volume:/data/db
+    networks:
+      - tienda-net
+
+networks:
+  tienda-net:
+    driver: bridge
+
+volumes:
+  tienda-volume:

@@ -6,10 +6,11 @@ WORKDIR /app
 
 #Copia nuestro codigo dentro de la imagen
 # No se copia node_modules ni package-lock.json para que se insalen las dependencias segun el OS de la imagen
-COPY . . 
+COPY package.json package-lock.json ./
 #Instala las dependencias 
 RUN npm install
 
+COPY . .
 #exponer el puerto 8080
 EXPOSE 5173
 
